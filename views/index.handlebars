@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greet exercise</title>
+
+    <link rel="stylesheet" href="css/greet.css">
+</head>
+
+<body>
+    <div class="container">
+        <center>
+            <h2>Greeting</h2>
+        </center>
+        <form action="/naming" method="POST">
+
+            <label>Name:</label>
+            <input placeholder="Type your full name here" name="username" type="text" class="myText" value="{{names.name}}"><br><br>
+            <div>
+                <input type="radio" name="theLanguage" class="language" value="english">
+                <label>English</label>
+
+                <input type="radio" name="theLanguage" class="language" value="isixhosa">
+                <label>IsiXhosa</label>
+
+                <input type="radio" name="theLanguage" class="language" value="afrikaans">
+                <label>Afrikaans</label>
+            </div><br>
+
+            <button type="submit" class="myButton">Greet me</button><br><br>
+        </form>
+
+        <div class="namesGreetedCounter">0</div>
+
+        <fieldset class="output">
+            <legend></legend>
+            <h4 class="{{msgs.message}}"></h4>
+        </fieldset>
+
+        <button class="reset" type="submit" value="">Reset</button>
+        {{!--
+        <script src="./greeting-fact.js" charset="utf-8"></script>
+        <script src="./js/greet.js" charset="utf-8"></script> --}}
+    </div>
+</body>
+
+</html>

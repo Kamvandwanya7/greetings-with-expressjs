@@ -1,0 +1,100 @@
+/* body, input {
+            font-size: 17px;
+        }
+
+        body {
+            display: flex; 
+            padding-top: 60px;
+            text-align: center;
+            background-color: #828E82;
+} */
+
+/* .container{
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    padding: 40px 50px;
+    padding-top: 60px;
+    text-align: center;
+    background-color: #828E82;
+
+} */
+body {
+    background-color: #94aab3;
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    padding: 40px 50px; 
+    padding-top: 60px; 
+    background-image: url(./images/img.jpg);
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    /* backdrop-filter: blur(10px); */
+    /* -webkit-backdrop-filter: blur(10px); */
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+input {
+    font-size: 17px;
+}
+
+.myButton {
+    background-color: #E0E0E0;
+    padding: 10px 10px;
+    /* color: white;  */
+    font-size: 17px;
+    border-radius: 10px;
+}
+
+h2 {
+    border: 2px solid black;
+    background-color: #9aa9bb;
+    border-top-left-radius: 3px;
+    border-bottom-right-radius: 2px;
+
+    padding: 10px;
+    width: 30%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.namesGreetedCounter {
+    color: #3A606E;
+    font-size: 24px;
+    text-underline-position: below;
+}
+
+.reset {
+    background-color: #94aab3;
+    padding: 10px 10px;
+    /* color: white;  */
+    font-size: 17px;
+    border-radius: 10px;
+}
+
+.output {
+    background-color: #6c7b81;
+}
+
+.red {
+    color: crimson;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.black {
+    color: #000;
+}
+
+/* @media(max-width: 780px) {
+    .glass {
+        flex-direction: column;
+    }
+}  */
