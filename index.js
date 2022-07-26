@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const GreetingFact = require('./greeting-fact')
 
 const app = express();
-const grtFact = GreetingFact();
+const grtFunction = GreetingFact();
 
 
 app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
@@ -19,29 +19,33 @@ app.use(bodyParser.json())
 
 
 app.get('/', function (req, res) {
-    let names = grtFact.getNames()
+    let names = grtFunction.getNames()
     res.render('index',
         {
             names: names,
-            messages: grtFact.greetMessage(names[names.length-1].name, names[names.length-1].language),
+            messages: grtFunction.greetMessage(names[names.length-1].name, names[names.length-1].language),
+            errorMessage: grtFunction.errorMessage(),
+            errorLnguage: grtFunction.errorLang(),
+            errorName: grtFunction.errorName()
+
         })
 });
 
 
 app.post('/naming', function (req, res) {
-    grtFact.setNames({
+    grtFunction.setNames({
         name: req.body.username,
         language: req.body.theLanguage,
 
     })
-    console.log(grtFact.getNames()),
+    console.log(grtFunction.getNames()),
         res.redirect('/')
 });
 
 
 app.post('/action', function (req, res) {
     console.log(req.body.actionType)
-    grtFact.recordAction(req.body.actionType)
+    grtFunction.recordAction(req.body.actionType)
 
 });
 

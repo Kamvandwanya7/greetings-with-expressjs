@@ -1,5 +1,5 @@
 module.exports = function GreetingFact(name) {
-    var greetedNames = name || [];
+    var greetedNames = name || [{"name":"", "language":""}];
     // alreadyExistingName || 
     let alphabetRegex = /^[a-z]+$/gi;
     let theError = "";
