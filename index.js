@@ -24,6 +24,7 @@ app.get('/', function (req, res) {
         {
             names: names,
             messages: grtFunction.greetMessage(names[names.length-1].name, names[names.length-1].language),
+            count: grtFunction.getCount(),
             errorMessage: grtFunction.errorMessage(),
             errorLnguage: grtFunction.errorLang(),
             errorName: grtFunction.errorName()
