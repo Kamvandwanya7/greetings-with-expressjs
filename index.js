@@ -19,10 +19,11 @@ app.use(bodyParser.json())
 
 
 app.get('/', function (req, res) {
+    let names = grtFact.getNames()
     res.render('index',
         {
-            names: grtFact.getNames(),
-            messages: grtFact.greetMessage(),
+            names: names,
+            messages: grtFact.greetMessage(names[names.length-1].name, names[names.length-1].language),
         })
 });
 
@@ -41,7 +42,7 @@ app.post('/naming', function (req, res) {
 app.post('/action', function (req, res) {
     console.log(req.body.actionType)
     grtFact.recordAction(req.body.actionType)
-    
+
 });
 
 
@@ -52,7 +53,7 @@ app.post('/action', function (req, res) {
 // app.get('/action/:type', function(req, res){
 // });
 
-let PORT = process.env.PORT || 3015;
+let PORT = process.env.PORT || 3055;
 app.listen(PORT, function () {
 
     console.log("App started at port:", PORT)
