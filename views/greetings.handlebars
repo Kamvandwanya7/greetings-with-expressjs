@@ -1,0 +1,26 @@
+<div class="container">
+    <nav>
+            <div class="menu">
+                <ul>
+                    <li class="active"><a href="/"><i class="fa-solid fa-house-user"></i>Home</a></li>
+                    <li><a href="/greeted" class="buton"><i></i>Greeted Names</a></li>
+                    <li><a href="#"><i class="fa-solid fa-laptop-file"></i>Time</a>
+
+
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+    <h1>Greeted Names</h1>
+
+    <table>
+        {{#each names}}
+        <tr>
+           <a href="/greetings/{{@key}}">{{@key}}</a><br><br>
+        </tr>
+        {{/each}}
+    </table>
+
+{{!-- <a class="btn" href="/greet">Greet times counter</a> --}}
+</div>

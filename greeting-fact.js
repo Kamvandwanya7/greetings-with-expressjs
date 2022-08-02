@@ -1,17 +1,19 @@
 module.exports = function GreetingFact(name) {
-    var greetedNames = name || [{"name":"", "language":""}];
+    var greetedNames = {};    // || [{"name":"", "language":""}];
     // alreadyExistingName || 
     let alphabetRegex = /^[a-z]+$/gi;
     let theError = "";
+    let greetedList = [];
+
 
 
     function setNames(name) {
         if (name) {
-            if (!greetedNames.includes(name)) {
-                greetedNames.push(name);
+            if (greetedNames[name] === undefined) {
+                greetedNames[name] = 1
             }
-            else if(greetedNames.includes(name))  {
-                return "name already exists";
+            else {
+                greetedNames[name]++
             }
         }
     }
@@ -29,21 +31,22 @@ module.exports = function GreetingFact(name) {
 
 
     function getCount() {
-        return greetedNames.length;
+        const propertyNames = Object.keys(greetedNames);
+        return propertyNames.length;
     }
 
     function regexPass(name) {
-   return alphabetRegex.test(name)
-        }
+        return alphabetRegex.test(name)
+    }
 
-        // function validatingName(name){
+    // function validatingName(name){
 
-        // }
-        // }
-        // else if(!alphabetRegex.test(name)){
-        //     return "Your name is not recognized!";
-        // }
-    
+    // }
+    // }
+    // else if(!alphabetRegex.test(name)){
+    //     return "Your name is not recognized!";
+    // }
+
 
 
     // function regexFail(name) {
@@ -51,18 +54,57 @@ module.exports = function GreetingFact(name) {
     //         return "Your name is not recognized!";
     //     }
     // }
-
+    var message = ""
     function greetMessage(name, language) {
         // if (name && language) {
         if (language === "english") {
-            return "Hello " + name;
+            message = "Hello " + name;
         } else if (language === "isixhosa") {
-            return "Molo " + name;
+            message = "Molo " + name;
         } else if (language === "afrikaans") {
-            return "Hallo " + name;
+            message = "Hallo " + name;
         }
         // }
+
     }
+
+    function getMessage() {
+        return message;
+
+    }
+
+    function recordAction(action) {
+        if (action === 'greet') {
+        }
+        greetedList.push({
+            type: action,
+        });
+    }
+
+    function greetings() {
+        return greetedList;
+    }
+    
+    function reset(){
+       return greetedNames;
+    }
+
+    function actionsFor(type) {
+        const filteredActions = [];
+
+        // loop through all the entries in the action list 
+        for (let index = 0; index < actionList.length; index++) {
+            const action = actionList[index];
+            // check this is the type we are doing the total for 
+            if (action.type === type) {
+                // add the action to the list
+                filteredActions.push(action);
+            }
+        }
+
+        return filteredActions;
+    }
+
     function errorMessage(name, language) {
         if (name == '' && language === null) {
             return "Please enter your name and select the language!";
@@ -79,18 +121,32 @@ module.exports = function GreetingFact(name) {
         }
     }
 
+    function greetedPeople(user){
+     for (const key in greetedNames) {
+         if (user === key) {
+             let counter = greetedNames[key];
+             return counter;  
+        }
+     }
+    }
+
     return {
         setNames,
         getNames,
         getCount,
         greetMessage,
         regexPass,
-        //  regexFail,
         errorMessage,
+        greetedPeople,
         errorLang,
         errorName,
         getRed,
         setRed,
+        getMessage,
+        recordAction,
+        greetings,
+        actionsFor,
+        reset
     }
 }
 

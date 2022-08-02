@@ -12,13 +12,36 @@
 
 <body>
     <div class="container">
+        <nav>
+            <div class="menu">
+                <ul>
+                    <li class="active"><a href="/"><i class="fa-solid fa-house-user"></i>Home</a></li>
+                    <li><a href="/greeted" class="buton"><i></i>Greeted Names</a></li>
+                    <li><a href="#"><i class="fa-solid fa-laptop-file"></i>Counter</a>
+
+
+                    </li>
+                </ul>
+            </div>
+        </nav>
         <center>
             <h2>Greeting</h2>
         </center>
+
+        <div class="error">
+            {{messages.error}}
+        </div>
+
+        <div class="success">
+            {{messages.success}}
+        </div>
+
         <form action="/naming" method="POST">
 
             <label>Name:</label>
-            <input placeholder="Type your full name here" name="username" type="text" class="myText" value="{{names.name}}"><br><br>
+            <input placeholder="Type your full name here" name="username" type="text" class="myText"
+                value="{{names.name}}">
+            <span class="namesGreetedCounter">{{count}}</span><br><br>
             <div>
                 <input type="radio" name="theLanguage" class="language" value="english">
                 <label>English</label>
@@ -33,14 +56,18 @@
             <button type="submit" class="myButton">Greet me</button><br><br>
         </form>
 
-        <div class="namesGreetedCounter">{{count}}</div>
+        {{!-- <div class="namesGreetedCounter">{{count}}</div> --}}
 
         <fieldset class="output">
-            <legend></legend>
             <h4 class="">{{messages}}</h4>
         </fieldset>
 
-        <button class="reset" type="submit" value="">Reset</button>
+
+        {{!-- <div> --}}
+            {{!-- <button type="submit" class="myButton">Restart</button> --}}
+            {{!-- <a class="btn" type="submit">Reset</a> --}}
+            {{!--
+        </div> --}}
         {{!--
         <script src="./greeting-fact.js" charset="utf-8"></script>
         <script src="./js/greet.js" charset="utf-8"></script> --}}
