@@ -8,6 +8,8 @@
     <title>Greet exercise</title>
 
     <link rel="stylesheet" href="css/greet.css">
+    {{!--
+    <script src="/public/client.js"></script> --}}
 </head>
 
 <body>
@@ -28,13 +30,18 @@
             <h2>Greeting</h2>
         </center>
 
-        <div class="error">
-            {{messages.error}}
-        </div>
+        {{#if messages}}
 
-        <div class="success">
-            {{messages.success}}
+        <div class="error">
+            {{messages.info}}
         </div>
+        {{/if}}
+
+        {{!-- {{#if message.success}}
+        <div class="success">
+            {{message.success}}
+        </div> --}}
+        {{!-- {{/if}} --}}
 
         <form action="/naming" method="POST">
 
@@ -62,6 +69,8 @@
             <h4 class="">{{messages}}</h4>
         </fieldset>
 
+
+        <script src="/public/client.js"></script>
 
         {{!-- <div> --}}
             {{!-- <button type="submit" class="myButton">Restart</button> --}}

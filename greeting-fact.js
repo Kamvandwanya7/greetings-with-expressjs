@@ -106,20 +106,18 @@ module.exports = function GreetingFact(name) {
     }
 
     function errorMessage(name, language) {
-        if (name == '' && language === null) {
+        if (name == '' && !language) {
             return "Please enter your name and select the language!";
         }
-    }
-    function errorLang(name, language) {
-        if (name !== '' && language === null) {
+         if(name !== '' && !language) {
             return "Hi " + name + " please select the language!";
         }
-    }
-    function errorName(name) {
         if (name == '') {
             return "Please enter your name!";
         }
+
     }
+    
 
     function greetedPeople(user){
      for (const key in greetedNames) {
@@ -138,8 +136,8 @@ module.exports = function GreetingFact(name) {
         regexPass,
         errorMessage,
         greetedPeople,
-        errorLang,
-        errorName,
+        // errorLang,
+        // errorName,
         getRed,
         setRed,
         getMessage,

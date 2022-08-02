@@ -14,6 +14,9 @@ app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 
+app.use(express.static('public'));
+
+
 // initialise session middleware - flash-express depends on it
 app.use(session({
     secret: 'this is my longest string that is used to test my greetings with routes app for browser',
@@ -24,15 +27,16 @@ app.use(session({
 // initialise the flash middleware
 app.use(flash());
 
-app.use(express.static('public'));
-
-
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 
+
+
 app.get('/', function (req, res) {
     let names = grtFunction.getNames()
+    req.flash('error', 'error!')
+
     res.render('index',
         {
             names: names,
@@ -44,13 +48,21 @@ app.get('/', function (req, res) {
 
 
 app.post('/naming', function (req, res) {
-    grtFunction.setNames(
-        req.body.username,
-    )
-    grtFunction.greetMessage(req.body.username, req.body.theLanguage)
-    grtFunction.errorMessage(req.body.username, req.body.theLanguage)
+    // let nameInput = grtFunction.getNames();
+    var nameInput =req.body.username;
+    var languageBtn= req.body.theLanguage;
+    req.flash('error', 'error!')
 
-    console.log(grtFunction.errorMessage(req.body.username, req.body.theLanguage)),
+        if(nameInput ==="", languageBtn){
+            req.flash('success', 'You have greeted successfully!')
+            grtFunction.setNames(req.body.username)
+            grtFunction.greetMessage(req.body.username, req.body.theLanguage)
+        }
+        else{
+        }
+
+
+    
     // console.log(grtFunction.getMessage());
     res.redirect('/')
 });
