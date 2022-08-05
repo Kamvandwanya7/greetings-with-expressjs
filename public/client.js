@@ -1,14 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
     let errorMessageElem = document.querySelector('.error');
     let successMessage = document.querySelector('.success');
+    let messageOut = document.querySelector('.output');
+
 
     console.log()
-    if (errorMessageElem.innerHTML !== '' || successMessage !== '') {
+    if (errorMessageElem.innerHTML !== '' || messageOut !== '') {
 
         setTimeout(function () {
             
             errorMessageElem.innerHTML = '';
-            successMessage = '';
-        }, 3000);
+            messageOut.innerHTML = '';
+
+        }, 2000);
     }
 });

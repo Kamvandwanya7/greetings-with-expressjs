@@ -35,31 +35,33 @@ module.exports = function GreetingFact() {
 
     
     var message = ""
-    function greetMessage(name,language) {
-        // if (name && language) {
-        if (language === "english") {
-            message = "Hello " + name;
-        } else if (language === "isixhosa") {
-            message = "Molo " + name;
-        } else if (language === "afrikaans") {
-            message = "Hallo " + name;
+    function greetMessage(name, language) {
+        if(name !== ""){
+            if (language === "english") {
+                message = "Hello " + name;
+            } else if (language === "isixhosa") {
+                message = "Molo " + name;
+            } else if (language === "afrikaans") {
+                message = "Hallo " + name;
+            }
+            return message;
         }
-        // }
-
-    }
+        }
+        
 
     function getMessage() {
-        return message;
+
+            return message
 
     }
 
-    function recordAction(action) {
-        if (action === 'greet') {
-        }
-        greetedList.push({
-            type: action,
-        });
-    }
+    // function recordAction(action) {
+    //     if (action === 'greet') {
+    //     }
+    //     greetedList.push({
+    //         type: action,
+    //     });
+    // }
 
     function greetings() {
         return greetedList;
@@ -69,34 +71,34 @@ module.exports = function GreetingFact() {
        return greetedNames;
     }
 
-    function actionsFor(type) {
-        const filteredActions = [];
+    // function actionsFor(type) {
+    //     const filteredActions = [];
 
-        // loop through all the entries in the action list 
-        for (let index = 0; index < actionList.length; index++) {
-            const action = actionList[index];
-            // check this is the type we are doing the total for 
-            if (action.type === type) {
-                // add the action to the list
-                filteredActions.push(action);
-            }
-        }
+    //     // loop through all the entries in the action list 
+    //     for (let index = 0; index < actionList.length; index++) {
+    //         const action = actionList[index];
+    //         // check this is the type we are doing the total for 
+    //         if (action.type === type) {
+    //             // add the action to the list
+    //             filteredActions.push(action);
+    //         }
+    //     }
 
-        return filteredActions;
-    }
+    //     return filteredActions;
+    // }
 
     function errorMessage(name, language) {
         // console.log(language + "{jijijjjij")
         if (name == '' && !language) {
             return "Please enter your name and select the language!";
         }
-         if(name !== '' && !language) {
+        else if(name !== '' && !language) {
             return "Please select the language!";
         }
-        if (name == '' && language) {
+      else if (name == '' && language) {
             return "Please enter your name!";
         }
-
+       
     }
     
 
@@ -109,6 +111,7 @@ module.exports = function GreetingFact() {
      }
     }
 
+
     return {
         setNames,
         getNames,
@@ -118,9 +121,9 @@ module.exports = function GreetingFact() {
         errorMessage,
         greetedPeople,
         getMessage,
-        recordAction,
+        // recordAction,
         greetings,
-        actionsFor,
+        // actionsFor,
         reset
     }
 }

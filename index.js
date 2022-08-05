@@ -45,7 +45,6 @@ app.get('/', function (req, res) {
             names: names,
             messagesz: grtFunction.getMessage(),
             count: grtFunction.getCount(),
-
         })
 });
 
@@ -61,13 +60,13 @@ app.post('/naming', function (req, res) {
         // req.flash('success', 'You have greeted successfully!')
     }
     if (nameInput == "" && !languageBtn) {
-        req.flash('error', 'Please enter your name and select language!')
+        req.flash('error', grtFunction.errorMessage(nameInput, languageBtn))
     }
-    else if (nameInput == '') {
-        req.flash('error', 'Please enter your name!')
+    else if (nameInput == '' && languageBtn) {
+        req.flash('error', grtFunction.errorMessage(nameInput, languageBtn))
     }
     else if (!languageBtn) {
-        req.flash('error', 'Please select language!')
+        req.flash('error', grtFunction.errorMessage(nameInput, languageBtn))
     }
 
     res.redirect('/')
