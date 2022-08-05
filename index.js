@@ -34,13 +34,16 @@ app.use(bodyParser.json())
 
 
 app.get('/', function (req, res) {
+
     let names = grtFunction.getNames()
-    req.flash('error', 'error!')
+
+
+    // req.flash('success','Please enter your name and select language!')
 
     res.render('index',
         {
             names: names,
-            messages: grtFunction.getMessage(),
+            messagesz: grtFunction.getMessage(),
             count: grtFunction.getCount(),
 
         })
@@ -49,21 +52,24 @@ app.get('/', function (req, res) {
 
 app.post('/naming', function (req, res) {
     // let nameInput = grtFunction.getNames();
-    var nameInput =req.body.username;
-    var languageBtn= req.body.theLanguage;
-    req.flash('error', 'error!')
+    var nameInput = req.body.username;
+    var languageBtn = req.body.theLanguage;
 
-        if(nameInput ==="", languageBtn){
-            req.flash('success', 'You have greeted successfully!')
-            grtFunction.setNames(req.body.username)
-            grtFunction.greetMessage(req.body.username, req.body.theLanguage)
-        }
-        else{
-        }
+    if (nameInput, languageBtn) {
+        grtFunction.setNames(nameInput)
+        grtFunction.greetMessage(nameInput, languageBtn)
+        // req.flash('success', 'You have greeted successfully!')
+    }
+    if (nameInput == "" && !languageBtn) {
+        req.flash('error', 'Please enter your name and select language!')
+    }
+    else if (nameInput == '') {
+        req.flash('error', 'Please enter your name!')
+    }
+    else if (!languageBtn) {
+        req.flash('error', 'Please select language!')
+    }
 
-
-    
-    // console.log(grtFunction.getMessage());
     res.redirect('/')
 });
 

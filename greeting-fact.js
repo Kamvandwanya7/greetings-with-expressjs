@@ -1,9 +1,10 @@
-module.exports = function GreetingFact(name) {
+module.exports = function GreetingFact() {
     var greetedNames = {};    // || [{"name":"", "language":""}];
     // alreadyExistingName || 
     let alphabetRegex = /^[a-z]+$/gi;
     let theError = "";
     let greetedList = [];
+    // var nameText = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 
 
 
@@ -18,17 +19,10 @@ module.exports = function GreetingFact(name) {
         }
     }
 
-    function setRed(red) {
-        theError = "red";
-    }
-    function getRed() {
-        return theError;
-    }
 
     function getNames() {
         return greetedNames;
     }
-
 
     function getCount() {
         const propertyNames = Object.keys(greetedNames);
@@ -39,23 +33,9 @@ module.exports = function GreetingFact(name) {
         return alphabetRegex.test(name)
     }
 
-    // function validatingName(name){
-
-    // }
-    // }
-    // else if(!alphabetRegex.test(name)){
-    //     return "Your name is not recognized!";
-    // }
-
-
-
-    // function regexFail(name) {
-    //     if (regexPass(name) == false) {
-    //         return "Your name is not recognized!";
-    //     }
-    // }
+    
     var message = ""
-    function greetMessage(name, language) {
+    function greetMessage(name,language) {
         // if (name && language) {
         if (language === "english") {
             message = "Hello " + name;
@@ -106,13 +86,14 @@ module.exports = function GreetingFact(name) {
     }
 
     function errorMessage(name, language) {
+        // console.log(language + "{jijijjjij")
         if (name == '' && !language) {
             return "Please enter your name and select the language!";
         }
          if(name !== '' && !language) {
-            return "Hi " + name + " please select the language!";
+            return "Please select the language!";
         }
-        if (name == '') {
+        if (name == '' && language) {
             return "Please enter your name!";
         }
 
@@ -136,10 +117,6 @@ module.exports = function GreetingFact(name) {
         regexPass,
         errorMessage,
         greetedPeople,
-        // errorLang,
-        // errorName,
-        getRed,
-        setRed,
         getMessage,
         recordAction,
         greetings,

@@ -19,8 +19,6 @@
                 <ul>
                     <li class="active"><a href="/"><i class="fa-solid fa-house-user"></i>Home</a></li>
                     <li><a href="/greeted" class="buton"><i></i>Greeted Names</a></li>
-                    <li><a href="#"><i class="fa-solid fa-laptop-file"></i>Counter</a>
-
 
                     </li>
                 </ul>
@@ -30,17 +28,17 @@
             <h2>Greeting</h2>
         </center>
 
-        {{#if messages}}
+        {{!-- {{#if messages}} --}}
 
         <div class="error">
-            {{messages.info}}
+            {{messages.error}}
         </div>
-        {{/if}}
+        {{!-- {{/if}} --}}
 
-        {{!-- {{#if message.success}}
+        {{!-- {{#if message.success}} --}}
         <div class="success">
-            {{message.success}}
-        </div> --}}
+            {{messages.success}}
+        </div> 
         {{!-- {{/if}} --}}
 
         <form action="/naming" method="POST">
@@ -66,11 +64,11 @@
         {{!-- <div class="namesGreetedCounter">{{count}}</div> --}}
 
         <fieldset class="output">
-            <h4 class="">{{messages}}</h4>
+            <h4 class="">{{messagesz}}</h4>
         </fieldset>
 
 
-        <script src="/public/client.js"></script>
+        <script src="client.js"></script>
 
         {{!-- <div> --}}
             {{!-- <button type="submit" class="myButton">Restart</button> --}}

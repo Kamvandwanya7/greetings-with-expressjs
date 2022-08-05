@@ -136,7 +136,6 @@ nav ul li a:hover {
     /* color: #000; */
 }
 
-.active,
 .menu ul li:hover {
     background: #555f8f;
     border-radius: 4px;
