@@ -22,8 +22,8 @@ if (process.env.NODE_ENV == 'production') {
 	}
 }
 const pool = new Pool({
-    connectionString,
-    ssl : useSSL
+    connectionString
+    // ssl : useSSL
   });
 
 const app = express();
