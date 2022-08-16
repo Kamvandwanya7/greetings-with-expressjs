@@ -1,4 +1,4 @@
-module.exports = function GreetingFact() {
+module.exports = function GreetingFact(pool) {
     var greetedNames = {};    // || [{"name":"", "language":""}];
     // alreadyExistingName || 
     let alphabetRegex = /^[a-z]+$/gi;
@@ -8,8 +8,9 @@ module.exports = function GreetingFact() {
 
 
 
-    function setNames(name) {
+    async function setNames(name) {
         if (name) {
+
             if (greetedNames[name] === undefined) {
                 greetedNames[name] = 1
             }
@@ -19,24 +20,44 @@ module.exports = function GreetingFact() {
         }
     }
 
-
-    function getNames() {
+    async function getNames() {
         return greetedNames;
     }
 
-    function getCount() {
-        const propertyNames = Object.keys(greetedNames);
-        return propertyNames.length;
+    async function getCount() {
+        let outputs = await pool.query('SELECT username FROM greetings')
+        return outputs.rowCount;
     }
 
-    function regexPass(name) {
+    async function regexPass(name) {
         return alphabetRegex.test(name)
     }
 
-    
+
+    async function updateCount(name) {
+        let results = await pool.query('SELECT username FROM greetings WHERE username= $1', [name])
+        // console.log(results)
+        if (results.rowCount == 0) {
+            await pool.query('INSERT INTO greetings (username, count) VALUES($1, $2) ', [name, 1])
+        } else {
+            await pool.query('UPDATE greetings SET count= count +1 WHERE username=$1', [name])
+        }
+    }
+
+    async function namesList(){
+     let outputs= await pool.query('SELECT username FROM greetings')
+    //  console.log(outputs)
+     return outputs.rows
+    }
+
+    async function deleteNames(name){
+        let outputs= await pool.query('DELETE * FROM greetings')
+        return outputs;
+    }
+
     var message = ""
-    function greetMessage(name, language) {
-        if(name !== ""){
+    async function greetMessage(name, language) {
+        if (name !== "") {
             if (language === "english") {
                 message = "Hello " + name;
             } else if (language === "isixhosa") {
@@ -46,13 +67,11 @@ module.exports = function GreetingFact() {
             }
             return message;
         }
-        }
-        
+    }
 
-    function getMessage() {
 
-            return message
-
+    async function getMessage() {
+        return message
     }
 
     // function recordAction(action) {
@@ -63,13 +82,16 @@ module.exports = function GreetingFact() {
     //     });
     // }
 
-    function greetings() {
+    async function greetings() {
         return greetedList;
     }
-    
-    function reset(){
-       return greetedNames;
-    }
+
+    // function reset() {
+    //     let outputs= await pool.query('DELETE username, id, count FROM greetings')
+    //     return outputs;
+    // }
+
+
 
     // function actionsFor(type) {
     //     const filteredActions = [];
@@ -87,29 +109,32 @@ module.exports = function GreetingFact() {
     //     return filteredActions;
     // }
 
-    function errorMessage(name, language) {
+    async function errorMessage(name, language) {
         // console.log(language + "{jijijjjij")
         if (name == '' && !language) {
             return "Please enter your name and select the language!";
         }
-        else if(name !== '' && !language) {
+        else if (name !== '' && !language) {
             return "Please select the language!";
         }
-      else if (name == '' && language) {
+        else if (name == '' && language) {
             return "Please enter your name!";
         }
-       
     }
-    
 
-    function greetedPeople(user){
-     for (const key in greetedNames) {
-         if (user === key) {
-             let counter = greetedNames[key];
-             return counter;  
-        }
-     }
+    async function greetedPeople(name) {
+        let outputs = await pool.query('SELECT count FROM greetings WHERE username=$1', [name])
+        return outputs.rows[0];
     }
+
+    // async function greetedPeople(user) {
+    //     for (const key in greetedNames) {
+    //         if (user === key) {
+    //             let counter = greetedNames[key];
+    //             return counter;
+    //         }
+    //     }
+    // }
 
 
     return {
@@ -121,10 +146,12 @@ module.exports = function GreetingFact() {
         errorMessage,
         greetedPeople,
         getMessage,
-        // recordAction,
         greetings,
-        // actionsFor,
-        reset
+        // reset,
+        updateCount,
+        namesList,
+        deleteNames,
+        // nameCount,
     }
 }
 

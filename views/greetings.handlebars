@@ -10,16 +10,17 @@
             </div>
         </nav>
 
-    <h4>Cllick on the name to check how many times the name has been greeted</h4>
+    <h4>Click on the name to check how many times the name has been greeted</h4>
 
     <table>
         {{#each names}}
         <tr>
             {{!-- <p>Click on the name</p> --}}
-           <a href="/greetings/{{@key}}">{{@key}}</a><br><br>
+           <a href="/greetings/{{this.username}}">{{this.username}}</a><br><br>
         </tr>
         {{/each}}
     </table>
+    {{!-- <button class="deleteBtn">Delete users</button> --}}
 
 {{!-- <a class="btn" href="/greet">Greet times counter</a> --}}
 </div>

@@ -190,12 +190,19 @@ nav ul li a:hover {
     margin-bottom: 1em;
 }
 
+.deleteBtn{
+    border: 1px solid black;
+    border-radius: 2px 2px;
+    background-color: #82A0BC;
+    padding: 5px;
+}
+
 .black {
     color: #000;
 }
 
-/* @media(max-width: 780px) {
-    .glass {
+@media(max-width: 780px) {
+    .container {
         flex-direction: column;
     }
-}  */
+} 
