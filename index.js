@@ -17,8 +17,8 @@ if (process.env.DATABASE_URL && !local){
 const connectionString = process.env.DATABASE_URL || 'postgresql://coder:pg123@localhost:5432/my_greetings';
 
 const pool = new Pool({
-    connectionString,
-    ssl : useSSL
+    connectionString
+    // ssl : useSSL
   });
 
 const app = express();
