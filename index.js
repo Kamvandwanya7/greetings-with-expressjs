@@ -17,12 +17,15 @@ const Pool = pg.Pool;
 const connectionString = process.env.DATABASE_URL || 'postgresql://coder:pg123@localhost:5432/my_greetings';
 
 if (process.env.NODE_ENV == 'production') {
-	ssl = {
-		rejectUnauthorized : false
-	}
+	// ssl = {
+	// 	rejectUnauthorized : false
+	// }
 }
 const pool = new Pool({
-    connectionString
+    connectionString,
+    ssl : {
+		rejectUnauthorized : false
+	}
   });
 
 const app = express();
