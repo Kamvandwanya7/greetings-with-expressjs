@@ -4,7 +4,9 @@ const bodyParser = require('body-parser')
 const GreetingFact = require('./greeting-fact')
 const flash = require('express-flash');
 const session = require('express-session');
-const pg = require("pg");
+const pg= require("pg");
+const pgPromise= require("pg-promise")
+const pgp= pgPromise({});
 const Pool = pg.Pool;
 
 // should we use a SSL connection
@@ -16,12 +18,18 @@ const Pool = pg.Pool;
 // which db connection to use
 const connectionString = process.env.DATABASE_URL || 'postgresql://coder:pg123@localhost:5432/my_greetings';
 
-if (process.env.NODE_ENV == 'production') {
+// if (process.env.NODE_ENV == 'production') {
 	// ssl = {
 	// 	rejectUnauthorized : false
 	// }
+// }
+
+if (process.env.NODE_ENV == 'production') {
+	config.ssl = {
+		rejectUnauthorized : false
+	}
 }
-const pool = new Pool({
+const db = pgp({
     connectionString,
     ssl : {
 		rejectUnauthorized : false
@@ -29,7 +37,7 @@ const pool = new Pool({
   });
 
 const app = express();
-const grtFunction = GreetingFact(pool);
+const grtFunction = GreetingFact(db);
 
 
 app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
@@ -102,17 +110,25 @@ app.get('/greeted', async function (req, res) {
     })
 });
 
-// app.post('/delete', async function (req, res){
-//     res.render('deleteBtn', {
-//         names: await grtFunction.reset()
-//     })
-// });
+
+app.get('/delete', async function (req, res){
+     await grtFunction.deleteAllNames()
+    res.redirect('/greeted')
+
+});
+
+app.get('/deleteUser', async function (req, res){
+    await grtFunction.deleteUser()
+   res.redirect('/greeted')
+});
+
+
 
 app.get('/greetings/:greet', async function (req, res) {
     const greetedPerson = req.params.greet;
     let counter = await grtFunction.greetedPeople(greetedPerson)
     console.log(counter)
-    let msg = `You have greeted ${greetedPerson} for ${counter.count} time(s) now`
+    let msg = `You have greeted ${greetedPerson} for ${counter.length} time(s) now`
     res.render('greet', {
         msg
     })

@@ -1,70 +1,70 @@
 const assert = require("assert");
 const GreetingFact= require("../greeting-fact")
 
-describe('The greeting factory function', function () {
-    it('it should be able to return greeted names', function () {
-        let greetName = GreetingFact();
-        greetName.setNames("phumza");
-        greetName.setNames("kamva");
+
+describe('The greeting factory function', async function () {
+    it('it should be able to return greeted names', async  function () {
+        let greetName =  GreetingFact();
+       await greetName.setNames("phumza");
+        await greetName.setNames("kamva");
 
         // assert.equal("Hello phumza", greet);
         assert.deepEqual({
             kamva: 1,
             phumza: 1
           }
-          , greetName.getNames());
+          ,await greetName.getNames());
     });
 
 
-    it('It should be able to count names greeted', function () {
+    it('It should be able to count names greeted', async function () {
         let greetName = GreetingFact();
-        greetName.setNames("Phumza");
-         greetName.setNames("Kamva");
-        greetName.setNames("Zinathi");
+        await greetName.setNames("Phumza");
+        await greetName.setNames("Kamva");
+        await greetName.setNames("Zinathi");
 
-        assert.equal(3, greetName.getCount());
+        assert.equal(3, await greetName.getCount());
     });
-    it('It should be able to return 0 if there is no name  greeted', function () {
+    it('It should be able to return 0 if there is no name  greeted',async function () {
         let greetName = GreetingFact();
-        greetName.setNames("")
-      
+       await greetName.setNames("")
 
-        assert.equal(0, greetName.getCount());
+        assert.equal(0, await greetName.getCount());
     });
 
 });
-describe('Different languages', function () {
-    it('It should be able to greet in afrikaans if language selected is afrikaans', function () {
+describe('Different languages', async function () {
+    it('It should be able to greet in afrikaans if language selected is afrikaans', async function () {
         let greetName = GreetingFact();
-        var grt = greetName.greetMessage("azo", "afrikaans");
+        var grt = await greetName.greetMessage("azo", "afrikaans");
         assert.equal("Hallo azo", grt)
 
     });
-    it('It should be able to greet in isixhosa if language selected is isixhosa', function () {
+    it('It should be able to greet in isixhosa if language selected is isixhosa', async function () {
         let greetName = GreetingFact();
-        var grt = greetName.greetMessage("azo", "isixhosa");
+        var grt = await greetName.greetMessage("azo", "isixhosa");
         assert.equal("Molo azo", grt)
 
     });
 });
-describe('Error messages', function () {
-    it('It should be able to return error message when name and language is not included', function () {
+describe('Error messages', async function () {
+    it('It should be able to return error message when name and language is not included', async function () {
         let greetName = GreetingFact();
-        var grt = greetName.errorMessage("", null);
+        var grt = await greetName.errorMessage("", null);
         assert.equal("Please enter your name and select the language!", grt)
 
     });
 
-    it('It should be able to return error message when language is not included', function () {
+    it('It should be able to return error message when language is not included', async function () {
         let greetName = GreetingFact();
-        var grt = greetName.errorMessage("Azo", null);
-        assert.equal("Please select the language!", grt)
+        var grt = await greetName.errorMessage("Azo", null);
+        assert.equal('Please select the language!', grt)
+    })    // Promise 'Please select the language!, grt')
 
-    });
 
-    it('It should be able to return error message when name is not inserted', function () {
+    it('It should be able to return error message when name is not inserted', async function () {
         let greetName = GreetingFact();
-        var grt = greetName.errorMessage("","isixhosa");
+        var grt = await greetName.errorMessage("","isixhosa");
         assert.equal("Please enter your name!", grt)
     });
 })

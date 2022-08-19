@@ -1,4 +1,4 @@
-module.exports = function GreetingFact(pool) {
+module.exports = function GreetingFact(db) {
     var greetedNames = {};    // || [{"name":"", "language":""}];
     // alreadyExistingName || 
     let alphabetRegex = /^[a-z]+$/gi;
@@ -25,8 +25,9 @@ module.exports = function GreetingFact(pool) {
     }
 
     async function getCount() {
-        let outputs = await pool.query('SELECT username FROM greetings')
-        return outputs.rowCount;
+        let outputs = await db.query('SELECT username FROM greetings')
+        // console.log(outputs)
+        return outputs.length;
     }
 
     async function regexPass(name) {
@@ -35,29 +36,25 @@ module.exports = function GreetingFact(pool) {
 
 
     async function updateCount(name) {
-        let results = await pool.query('SELECT username FROM greetings WHERE username= $1', [name])
+        let results = await db.query('SELECT username FROM greetings WHERE username= $1', [name])
         // console.log(results)
-        if (results.rowCount == 0) {
-            await pool.query('INSERT INTO greetings (username, count) VALUES($1, $2) ', [name, 1])
+        if (results == 0 ) {
+            await db.query('INSERT INTO greetings (username, count) VALUES($1, $2) ', [name, 1])
         } else {
-            await pool.query('UPDATE greetings SET count= count +1 WHERE username=$1', [name])
+            await db.query('UPDATE greetings SET count= count +1 WHERE username=$1', [name])
         }
     }
 
     async function namesList(){
-     let outputs= await pool.query('SELECT username FROM greetings')
+     let outputs= await db.query('SELECT username FROM greetings')
     //  console.log(outputs)
-     return outputs.rows
+     return outputs;  
     }
 
-    async function deleteNames(name){
-        let outputs= await pool.query('DELETE * FROM greetings')
-        return outputs;
-    }
 
     var message = ""
     async function greetMessage(name, language) {
-        if (name !== "") {
+        if (name !== "" && alphabetRegex.test(name) == true ) {
             if (language === "english") {
                 message = "Hello " + name;
             } else if (language === "isixhosa") {
@@ -71,7 +68,7 @@ module.exports = function GreetingFact(pool) {
 
 
     async function getMessage() {
-        return message
+        return message;
     }
 
     // function recordAction(action) {
@@ -86,12 +83,19 @@ module.exports = function GreetingFact(pool) {
         return greetedList;
     }
 
-    // function reset() {
-    //     let outputs= await pool.query('DELETE username, id, count FROM greetings')
-    //     return outputs;
-    // }
+    async function deleteAllNames(){
+        let outputs= await db.query('DELETE FROM greetings')
+        return outputs;
+    }
 
+    async function deleteUser(name) {
+        let outputs= await db.query('DELETE username, id, count FROM greetings', [name])
+        return outputs;
+    }
 
+    async function regexPass(name) {
+        return alphabetRegex.test(name)
+             }
 
     // function actionsFor(type) {
     //     const filteredActions = [];
@@ -120,11 +124,14 @@ module.exports = function GreetingFact(pool) {
         else if (name == '' && language) {
             return "Please enter your name!";
         }
+        else if(name !== '' && alphabetRegex.test(name) == false){
+            return "Please enter alphabets only!";
+        }
     }
 
     async function greetedPeople(name) {
-        let outputs = await pool.query('SELECT count FROM greetings WHERE username=$1', [name])
-        return outputs.rows[0];
+        let outputs = await db.query('SELECT count FROM greetings WHERE username=$1', [name])
+        return outputs;
     }
 
     // async function greetedPeople(user) {
@@ -150,7 +157,8 @@ module.exports = function GreetingFact(pool) {
         // reset,
         updateCount,
         namesList,
-        deleteNames,
+        deleteAllNames,
+        deleteUser,
         // nameCount,
     }
 }
