@@ -22,11 +22,11 @@ if (process.env.DATABASE_URL && !local) {
 // which db connection to use
 const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://coder:pg123@localhost:5432/my_greetings';
 
-// if (process.env.NODE_ENV == 'production') {
-// ssl = {
-// 	rejectUnauthorized : false
-// }
-// }
+if (process.env.NODE_ENV == 'production') {
+ssl = {
+	rejectUnauthorized : false
+}
+}
 
 // if (process.env.NODE_ENV == 'production') {
 //     config.ssl = {
