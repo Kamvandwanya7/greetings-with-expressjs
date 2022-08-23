@@ -2,42 +2,51 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser')
 const GreetingFact = require('./greeting-fact')
+const dbGreetings= require('./datab-functions');
+const routes = require('./routes/greetings.routes')
 const flash = require('express-flash');
 const session = require('express-session');
-const pg= require("pg");
-const pgPromise= require("pg-promise")
-const pgp= pgPromise({});
-const Pool = pg.Pool;
+// const pg= require("pg");
+const pgp = require("pg-promise")();
+const app = express();
+// const pgp= pgPromise();
+
+
 
 // should we use a SSL connection
-// let useSSL = false;
-// let local = process.env.LOCAL || false;
-// if (process.env.DATABASE_URL && !local){
-//     useSSL = true;
-// }
+let useSSL = false;
+let local = process.env.LOCAL || false;
+if (process.env.DATABASE_URL && !local) {
+    useSSL = true;
+}
 // which db connection to use
-const connectionString = process.env.DATABASE_URL || 'postgresql://coder:pg123@localhost:5432/my_greetings';
+const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://coder:pg123@localhost:5432/my_greetings';
 
 // if (process.env.NODE_ENV == 'production') {
-	// ssl = {
-	// 	rejectUnauthorized : false
-	// }
+// ssl = {
+// 	rejectUnauthorized : false
+// }
 // }
 
 if (process.env.NODE_ENV == 'production') {
-	config.ssl = {
-		rejectUnauthorized : false
-	}
+    config.ssl = {
+        rejectUnauthorized: false
+    }
 }
-const db = pgp({
-    connectionString,
-    ssl : {
-		rejectUnauthorized : false
-	}
-  });
 
-const app = express();
-const grtFunction = GreetingFact(db);
+
+
+const config = {
+    connectionString: DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
+};
+
+const db = pgp(config);
+const grtFunction = GreetingFact();
+const databaseInstance= dbGreetings(db);
+const routeFunctions = routes(grtFunction, databaseInstance)
 
 
 app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
@@ -61,78 +70,25 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 
+app.get('/', routeFunctions.home);
 
 
-app.get('/', async function (req, res) {
-
-    let names = await grtFunction.getNames()
+app.post('/naming', routeFunctions.nameGet);
 
 
-    //  req.flash('success','Please enter your name and select language!')
-
-    res.render('index',
-        {
-            names: names,
-            messagesz: await grtFunction.getMessage(),
-            count: await grtFunction.getCount(),
-        })
-});
+app.get('/greeted', routeFunctions.getGreet);
 
 
-app.post('/naming', async function (req, res) {
-    // let nameInput = grtFunction.getNames();
-    var nameInput = req.body.username;
-    var languageBtn = req.body.theLanguage;
+app.get('/delete', routeFunctions.deleteNames);
 
-    if (nameInput, languageBtn) {
-        await grtFunction.updateCount(nameInput)
-        await grtFunction.greetMessage(nameInput, languageBtn)
-        // req.flash('success', 'You have greeted successfully!')
-    }
-    if (nameInput == "" && !languageBtn) {
-        req.flash('error', await grtFunction.errorMessage(nameInput, languageBtn))
-    }
-    else if (nameInput == '' && languageBtn) {
-        req.flash('error', await grtFunction.errorMessage(nameInput, languageBtn))
-    }
-    else if (!languageBtn) {
-        req.flash('error', await grtFunction.errorMessage(nameInput, languageBtn))
-    }
-
-    res.redirect('/')
-});
-
-
-app.get('/greeted', async function (req, res) {
-    // await grtFunction.recordAction(req.body.actionType)
-    res.render('greetings', {
-        names: await grtFunction.namesList()
-    })
-});
-
-
-app.get('/delete', async function (req, res){
-     await grtFunction.deleteAllNames()
-    res.redirect('/greeted')
-
-});
-
-app.get('/deleteUser', async function (req, res){
-    await grtFunction.deleteUser()
-   res.redirect('/greeted')
-});
+// app.get('/deleteUser', async function (req, res){
+//     await grtFunction.deleteUser()
+//    res.redirect('/greeted')
+// });
 
 
 
-app.get('/greetings/:greet', async function (req, res) {
-    const greetedPerson = req.params.greet;
-    let counter = await grtFunction.greetedPeople(greetedPerson)
-    console.log(counter)
-    let msg = `You have greeted ${greetedPerson} for ${counter.length} time(s) now`
-    res.render('greet', {
-        msg
-    })
-})
+app.get('/greetings/:greet',)
 
 let PORT = process.env.PORT || 3055;
 app.listen(PORT, async function () {
