@@ -28,11 +28,11 @@ const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://coder:pg123@local
 // }
 // }
 
-if (process.env.NODE_ENV == 'production') {
-    config.ssl = {
-        rejectUnauthorized: false
-    }
-}
+// if (process.env.NODE_ENV == 'production') {
+//     config.ssl = {
+//         rejectUnauthorized: false
+//     }
+// }
 
 
 
