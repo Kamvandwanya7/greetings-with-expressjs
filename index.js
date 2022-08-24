@@ -27,21 +27,22 @@ const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://coder:pg123@local
 // 	rejectUnauthorized : false
 // }
 // }
-
-if (process.env.NODE_ENV == 'production') {
-    config.ssl = {
-        rejectUnauthorized: false
-    }
-}
-
-
-
 const config = {
     connectionString: DATABASE_URL,
     ssl: {
         rejectUnauthorized: false
     }
 };
+
+// if (process.env.NODE_ENV == 'production') {
+//     config.ssl = {
+//         rejectUnauthorized: false
+//     }
+// }
+
+
+
+
 
 const db = pgp(config);
 const grtFunction = GreetingFact();
