@@ -1,12 +1,8 @@
 module.exports = function routes(grtFunction, database) {
 
     async function home(req, res) {
-
         let names = await grtFunction.getNames()
-
-       
         //  req.flash('success','Please enter your name and select language!')
-
         res.render('index',
             {
                 names: names,
@@ -17,17 +13,12 @@ module.exports = function routes(grtFunction, database) {
 
     async function nameGet(req, res) {
         // let nameInput = grtFunction.getNames();
-        var nameInput = req.body.username;
+        var nameInput = req.body.username.charAt().toUpperCase() + req.body.username.slice(1).toLowerCase();;
         var languageBtn = req.body.theLanguage;
 
         if (nameInput, languageBtn) {
             await grtFunction.greetMessage(nameInput, languageBtn);
-            //  console.log(kamva);
-            //  if (kamva=== true) {
-            //      await grtFunction.updateCount(nameInput)
-
-            //  }
-            // req.flash('success', 'You have greeted successfully!')
+            await database.updateCount(nameInput)
         }
         if (nameInput == "" && !languageBtn) {
             req.flash('error', await grtFunction.errorMessage(nameInput, languageBtn))
@@ -44,19 +35,20 @@ module.exports = function routes(grtFunction, database) {
 
     async function getGreet(req, res) {
         // await grtFunction.recordAction(req.body.actionType)
+        // console.log(await database.nameList())
         res.render('greetings', {
-            names: await grtFunction.namesList()
+            names: await database.namesList()
         })
     }
+
     async function deleteNames(req, res) {
-        await grtFunction.deleteAllNames()
+        await database.deleteAllNames()
         res.redirect('/greeted')
     }
 
     async function greetedNames(req, res) {
         const greetedPerson = req.params.greet;
-        let counter = await grtFunction.greetedPeople(greetedPerson)
-        console.log(counter)
+        let counter = await database.greetedPeople(greetedPerson)
         res.render('greet', {
             counter,
             greetedPerson

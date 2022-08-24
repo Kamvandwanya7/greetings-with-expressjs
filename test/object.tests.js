@@ -12,7 +12,7 @@ describe('The greeting factory function', async function () {
             kamva: 1,
             phumza: 1
         }
-            , await greetName.getNames());
+            ,await greetName.getNames());
     });
 });
 describe('Error messages', async function () {

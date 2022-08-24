@@ -88,7 +88,7 @@ app.get('/delete', routeFunctions.deleteNames);
 
 
 
-app.get('/greetings/:greet',)
+app.get('/greetings/:greet', routeFunctions.greetedNames)
 
 let PORT = process.env.PORT || 3055;
 app.listen(PORT, async function () {
