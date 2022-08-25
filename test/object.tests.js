@@ -14,8 +14,7 @@ describe('The greeting factory function', async function () {
         }
             ,await greetName.getNames());
     });
-});
-describe('Error messages', async function () {
+
     it('It should be able to return error message when name and language is not included', async function () {
         let greetName = GreetingFact();
         var grt = await greetName.errorMessage("", null);
@@ -36,7 +35,6 @@ describe('Error messages', async function () {
         assert.equal("Please enter your name!", grt)
     });
 
-describe('Different languages', async function () {
         it('It should be able to greet in afrikaans if language selected is afrikaans', async function () {
             let greetName = GreetingFact();
             var grt = await greetName.greetMessage("azo", "afrikaans");
@@ -51,4 +49,3 @@ describe('Different languages', async function () {
         });
     });
     
-});

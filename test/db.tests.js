@@ -12,11 +12,11 @@ const config = {
 const db = pgp(config);
 
 
-describe('The counter', async function () {
+describe('My database tests', async function () {
     this.beforeEach(async function () {
         await db.none('DELETE FROM greetings')
     });
-    it('It should be able to count names greeted', async function () {
+    it('It should be able to count 3 names greeted on database', async function () {
         let greetName = GreetingFact(db);
         await greetName.updateCount("Phumza");
         await greetName.updateCount("Kamva");
@@ -24,18 +24,47 @@ describe('The counter', async function () {
 
         assert.equal(3, await greetName.getCount());
     });
-});
-// this.beforeEach(async function () {
-//     await db.none('DELETE FROM greetings')
-// });
 
-    it('It should be able to return 0 if there is no name  greeted', async function () {
+    it('It should be able to count 1 name greeted on database', async function () {
         let greetName = GreetingFact(db);
-        await greetName.updateCount("")
+        await greetName.updateCount("Phumza");
+        await greetName.updateCount("Phumza");
+        await greetName.updateCount("Phumza");
 
-        assert.equal(0, await greetName.getCount());
+        assert.equal(1, await greetName.getCount());
     });
-
-     
-// });
-
+    // this.beforeEach(async function () {
+        //     await db.none('DELETE FROM greetings')
+        // });
+        
+        it('It should be able to clear greeted names', async function () {
+            let greetName = GreetingFact(db);
+            await greetName.updateCount("Sange")
+            await greetName.updateCount("Zona")
+            await greetName.updateCount("Sbahle")
+            
+            assert.equal(null, await greetName.deleteAllNames());
+        });
+        
+        
+        it('It should be able to return list of greeted names', async function () {
+            let greetName = GreetingFact(db);
+            await greetName.updateCount("Sange")
+            await greetName.updateCount("Zona")
+            await greetName.updateCount("Sbahle")
+            
+            // await greetName.namesList([{"names": "Thango"},{"names": "Sbahle"},{"names": "Zuko"}])
+            
+            assert.deepEqual( [{"username": "Sange"},{"username": "Zona"},{"username": "Sbahle"}] , await greetName.namesList([{"names": "Thango"},{"names": "Sbahle"},{"names": "Zuko"}]));
+        }); 
+    });
+        // {
+    //     -    "names": "Thango"
+    //     -  }
+    //     -  {
+    //     -    "names": "Sbahle"
+    //     -  }
+    //     -  {
+    //     -    "names": "Zuko"
+    //     -  }
+  

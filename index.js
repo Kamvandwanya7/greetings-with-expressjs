@@ -86,7 +86,7 @@ app.get('/delete', routeFunctions.deleteNames);
 //     await grtFunction.deleteUser()
 //    res.redirect('/greeted')
 // });
-
+app.get('/remove', routeFunctions.removeNames);
 
 
 app.get('/greetings/:greet', routeFunctions.greetedNames)
