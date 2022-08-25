@@ -28,7 +28,7 @@ jobs:
           POSTGRES_DB: tests
           POSTGRES_PASSWORD: pg123
           POSTGRES_PORT: 5432
-          POSTGRES_USER: postgres
+          POSTGRES_USER: coder
         ports:
           - 5432:5432
         
@@ -50,9 +50,9 @@ jobs:
     - run: npm install -g npm
     - run: npm install
     - run: |
-        PGPASSWORD=pg123 psql -h localhost -U postgress -d tests -a -f database.sql
+        PGPASSWORD=pg123 psql -h localhost -U coder -d tests -a -f database.sql
 
     - run: npm run build --if-present
     - run: npm test
     env: 
-      DATABASE_URL: postgresql://postgres:pg123@localhost:5432/tests
+      DATABASE_URL: postgresql://coder:pg123@localhost:5432/tests
