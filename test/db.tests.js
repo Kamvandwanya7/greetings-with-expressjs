@@ -57,14 +57,15 @@ describe('My database tests', async function () {
             
             assert.deepEqual( [{"username": "Sange"},{"username": "Zona"},{"username": "Sbahle"}] , await greetName.namesList([{"names": "Thango"},{"names": "Sbahle"},{"names": "Zuko"}]));
         }); 
+
+        // it('It should be able to update a number of times a name has been greeted', async function () {
+        //     let greetName = GreetingFact(db);
+        //     await greetName.updateCount("Sange")
+        //     await greetName.updateCount("Sange")
+        //     await greetName.updateCount("Sange")
+        //     await greetName.updateCount("Sange")            
+        //     assert.deepEqual( 'Sange', await greetName.greetedPeople());
+        // }); 
     });
-        // {
-    //     -    "names": "Thango"
-    //     -  }
-    //     -  {
-    //     -    "names": "Sbahle"
-    //     -  }
-    //     -  {
-    //     -    "names": "Zuko"
-    //     -  }
+       
   

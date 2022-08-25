@@ -41,9 +41,6 @@ const config = {
 // }
 
 
-
-
-
 const db = pgp(config);
 const grtFunction = GreetingFact();
 const databaseInstance= dbGreetings(db);
@@ -82,16 +79,13 @@ app.get('/greeted', routeFunctions.getGreet);
 
 app.get('/delete', routeFunctions.deleteNames);
 
-// app.get('/deleteUser', async function (req, res){
-//     await grtFunction.deleteUser()
-//    res.redirect('/greeted')
-// });
+
 app.get('/remove', routeFunctions.removeNames);
 
 
 app.get('/greetings/:greet', routeFunctions.greetedNames)
 
-let PORT = process.env.PORT || 3055;
+let PORT = process.env.PORT || 3002;
 app.listen(PORT, async function () {
 
     console.log("App started at port:", PORT)

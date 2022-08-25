@@ -5,12 +5,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     console.log()
-    if (errorMessageElem.innerHTML !== '' || messageOut !== '') {
+    if (errorMessageElem.innerHTML !== '')  {
 
         setTimeout(function () {
             
             errorMessageElem.innerHTML = '';
-            messageOut.innerHTML = '';
+            // messageOut.innerHTML = '';
 
         }, 2000);
     }

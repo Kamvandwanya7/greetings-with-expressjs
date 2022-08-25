@@ -19,6 +19,8 @@
                 <ul>
                     <li class="active"><a href="/"><i class="fa-solid fa-house-user"></i>Home</a></li>
                     <li><a href="/greeted" class="buton"><i></i>Greeted Names</a></li>
+                     {{!-- <li><a href="/" class="buton"><i></i>Reset</a></li> --}}
+                    {{!-- <a href="/"><button type="submit" class="buton">Reset</button> --}}
 
                     </li>
                 </ul>
@@ -31,14 +33,14 @@
         {{!-- {{#if messages}} --}}
 
         <div class="error">
-            {{messages.error}}
+            {{messages.info}}
         </div>
         {{!-- {{/if}} --}}
 
         {{!-- {{#if message.success}} --}}
-        <div class="success">
+        {{!-- <div class="success">
             {{messages.success}}
-        </div> 
+        </div>  --}}
         {{!-- {{/if}} --}}
 
         <form action="/naming" method="POST">

@@ -16,18 +16,23 @@ module.exports = function routes(grtFunction, database) {
         var nameInput = req.body.username.charAt().toUpperCase() + req.body.username.slice(1).toLowerCase();;
         var languageBtn = req.body.theLanguage;
 
-        if (nameInput, languageBtn) {
+        if (nameInput && languageBtn || grtFunction.regexPass(nameInput)) {
+            
             await grtFunction.greetMessage(nameInput, languageBtn);
             await database.updateCount(nameInput);
         }
-        if (nameInput == "" && !languageBtn) {
-            req.flash('error', await grtFunction.errorMessage(nameInput, languageBtn))
+        if (nameInput == "" && !languageBtn ) {
+            req.flash('info', await grtFunction.errorMessage(nameInput, languageBtn))
         }
         else if (nameInput == '' && languageBtn) {
-            req.flash('error', await grtFunction.errorMessage(nameInput, languageBtn))
+        
         }
         else if (!languageBtn) {
-            req.flash('error', await grtFunction.errorMessage(nameInput, languageBtn))
+            req.flash('info', await grtFunction.errorMessage(nameInput, languageBtn))
+        }
+        if( languageBtn && !grtFunction.regexPass(nameInput)){
+            req.flash('info', await grtFunction.errorMessage(nameInput, languageBtn))
+
         }
 
         res.redirect('/')
