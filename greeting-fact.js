@@ -28,7 +28,6 @@ module.exports = function GreetingFact() {
 
     var message = ""
     function greetMessage(name, language) {
-            // setNames(name)
             if(name, language){
                 if (language === "english") {
                     message= "Hello " + name;
@@ -73,7 +72,6 @@ module.exports = function GreetingFact() {
     }
 
     return {
-        // setNames,
         getNames,
         greetMessage,
         regexPass,
